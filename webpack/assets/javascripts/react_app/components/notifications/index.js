@@ -17,11 +17,7 @@ class notificationContainer extends React.Component {
   }
 
   handleClickOutside() {
-    const {
-      isDrawerOpen,
-      isReady,
-      toggleDrawer,
-    } = this.props;
+    const { isDrawerOpen, isReady, toggleDrawer } = this.props;
 
     if (isReady && isDrawerOpen) {
       toggleDrawer();
@@ -44,21 +40,19 @@ class notificationContainer extends React.Component {
 
     return (
       <div>
-        <ToggleIcon
-          hasUnreadMessages={hasUnreadMessages}
-          onClick={toggleDrawer}
-        />
+        <ToggleIcon hasUnreadMessages={hasUnreadMessages} onClick={toggleDrawer} />
         {isReady &&
-          isDrawerOpen &&
-          <Drawer
-            onExpandGroup={expandGroup}
-            onClickedLink={onClickedLink}
-            onMarkAsRead={onMarkAsRead}
-            onMarkGroupAsRead={onMarkGroupAsRead}
-            expandedGroup={expandedGroup}
-            notificationGroups={notifications}
-            toggleDrawer={toggleDrawer}
-          />}
+          isDrawerOpen && (
+            <Drawer
+              onExpandGroup={expandGroup}
+              onClickedLink={onClickedLink}
+              onMarkAsRead={onMarkAsRead}
+              onMarkGroupAsRead={onMarkGroupAsRead}
+              expandedGroup={expandedGroup}
+              notificationGroups={notifications}
+              toggleDrawer={toggleDrawer}
+            />
+          )}
       </div>
     );
   }
@@ -76,7 +70,7 @@ const mapStateToProps = (state) => {
   return {
     isDrawerOpen,
     isPolling,
-    notifications: groupBy(notifications, 'group'),
+    notifications: groupBy(notifications, n => n.group),
     expandedGroup,
     isReady: !isUndefined(notifications),
     hasUnreadMessages,
